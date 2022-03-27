@@ -3,7 +3,10 @@
 # The client should send the compressed data and received back in order to decompress it(the data basically did a round trip) 
 # in order to verify that we got everything back from the server that we send.
 
+# V2 maybe add confirmation messages that are received from the server. 
+
 import socket, sys, re, time, os
+from textwrap import fill
 sys.path.append("../lib")       # for params
 import params
 
@@ -40,8 +43,8 @@ for res in socket.getaddrinfo(serverHost, serverPort, socket.AF_UNSPEC, socket.S
         s = None
         continue
     try:
-        print(" attempting to sect to %s" % repr(sa))
-        s.sect(sa)
+        print(" attempting to connect to %s" % repr(sa))
+        s.connect(sa)
     except socket.error as msg:
         print(" error: %s" % msg)
         s.close()
@@ -59,88 +62,82 @@ if delay != 0:
     time.sleep(int(delay))
     print("done sleeping")
 
+file_names = input('What files would you like transfer? Please separate the nammes by using a comma\n').split(' ')
+
+# Create the bytearray that will keep the info. of the file and will be send all at once.
+# file_data = bytearray()
+file_data = []
 
 # Client will send the size of the file name, the name of the file, the size of the file, and the contents of the file. 
 # The file names will be specified in the command line
-for i in range(1, len(sys.argv) - 1):
+for i in file_names:
+    # Create the bytearray that will keep the info. of the file and will be send all at once.
+
     # Get file name 
-    file_name = str(sys.argv[i])
+    file_name = i
 
-    # Send file name size
-    data = sys.getsizeof(file_name)
-    s.sendall(data.encode())
+    # Get file name size
+    file_name_size = str(len(file_name))
 
-    # Send file name
-    data = file_name
-    s.sendall(data.encode())
-
-    file_size = os.path.getsize(file_name)
-
-    # Send size of file
-    data = file_size
-    s.sendall(data.encode())
-
-    # Send contents of file
+    # Get the file size and contents
     file = open(file_name, 'r')
     data = file.read()
-    s.sendall(data.encode())
+    file_size = str(len(data))
+    
+    file_data.append(file_name_size)
+    file_data.append(file_name)
+    file_data.append(file_size)
+    file_data.append(data)
+
+
+    file_data = ''.join(file_data)
+    # # append the file name
+    # data = file_name
+    # file_data.extend(data.encode())
+
+    # # Get the file size and the contents
+    # file = open(file_name, 'r')
+    # data = file.read()
+    # file_size = len(data)
+
+    # # Append size of file
+    # file_data.append(file_size)
+
+    # # Append contents of file
+    # file_data.extend(data.encode())
+
+    # Finally send it 
+    print(file_data)
+    s.sendall(file_data.encode())
 
 
 
 # At this point we will be receiving the files back(echo)
 # Start receiving files
-while True:
-    # first thing to receive is the length of the file name in bytes
-    data = s.recv(1024)
-
-    if not data:
-        # No more file contents
-        break
-
-    file_name_size = int(data.decode())
-
-    # Next thing to receive is the actual file name
-    data = s.recv(1024)
-
-    # Make sure that the name of the file is of the size that was given 
-    file_name = data.decode()
-    
-    if(file_name_size != sys.getsizeof(file_name)):
-        print("error, file name is not of specified size")
-        continue
-
-    
-    # Next thing to receive is the size of the file
-    data = s.recv(1024)
-    file_size = int(data.decode())
-
-    # open a file with the send name and start writing the contents of it
-    file = open(file_name,'w')
-
-    # Next thing to receive is the contents of the file, for this we use a while loop to keep receiving until we no longer get data
-    # use the size of the file to also know when to stop
-
-    current_amount = 0
-
-    while True:
-        # Receive data of the file, write it to the file, and check whether we are done receiving data for that file
-        data = (s.recv(file_size)).decode()
-        file.write(data)
-        current_amount += sys.getsizeof(data)
-
-        if(current_amount == file_size):
-            file.close()
-            break    # Move on to the next file
-
-
-print('done')
-s.close()
-
-
 # while True:
-#     data = s.recv(1024).decode()
-#     print("Received '%s'" % data)
-#     if len(data) == 0:
+#     # Receiving all the info of the file and the contents
+#     data = s.recv(1024)
+
+#     if not data:
+#         # No more file contents
 #         break
-# print("Zero length read.  Closing")
-# s.close()
+
+#     print(data.decode())
+#     file = open(file_name,'w')
+
+#     # Next thing to receive is the contents of the file, for this we use a while loop to keep receiving until we no longer get data
+#     # use the size of the file to also know when to stop
+
+#     current_amount = 0
+
+#     # write to the file
+#     file.write(data)
+#     current_amount += sys.getsizeof(data)
+
+#     if(current_amount == file_size):
+#         file.close()
+#         break    # Move on to the next file
+
+
+# print('done')
+s.close()
