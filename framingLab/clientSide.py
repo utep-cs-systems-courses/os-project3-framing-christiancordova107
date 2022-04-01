@@ -62,17 +62,18 @@ if delay != 0:
     time.sleep(int(delay))
     print("done sleeping")
 
-file_names = input('What files would you like transfer? Please separate the nammes by using a comma\n').split(' ')
+file_names = input('What files would you like transfer? Please separate the names by using a comma\n').split(' ')
 
-# Create the bytearray that will keep the info. of the file and will be send all at once.
+# Create the array that will keep the info. of the file and will be send all at once.
 # file_data = bytearray()
 file_data = []
+
+file_data.append('\\')
+file_data.append(str(len(file_names)))
 
 # Client will send the size of the file name, the name of the file, the size of the file, and the contents of the file. 
 # The file names will be specified in the command line
 for i in file_names:
-    # Create the bytearray that will keep the info. of the file and will be send all at once.
-
     # Get file name 
     file_name = i
 
@@ -84,10 +85,15 @@ for i in file_names:
     data = file.read()
     file_size = str(len(data))
     
+    file_data.append('\\')
     file_data.append(file_name_size)
+    file_data.append('\\')
     file_data.append(file_name)
+    file_data.append('\\')
     file_data.append(file_size)
+    file_data.append('\\')
     file_data.append(data)
+    file_data.append('\\')
 
 
     file_data = ''.join(file_data)

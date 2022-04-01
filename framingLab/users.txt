@@ -1,0 +1,28 @@
+Dictionary
+Each line below contains username, salt and hashed password.
+james29_uLQ, YZJ4jQl7lD, d3fd632ec2f17da3d1d4c37539721f2d2a65bf52
+linda29_uLQ, lcdOVKRceW, 50e93a8b4fe07b0e3d08d26e2275eb145317aae9
+sofia29_uLQ, kbr8gbVy0y, 7a762ece48e0de13b6a4f6e831f79a795edca924
+santiago29_uLQ, 1yZK2pnVGn, 935d3d8f017c8483f66cadc96d53c9d8e13764b8
+isabella29_uLQ, EOJtQfekc-, eb0aca3416152d5f3a4074f94ca234bab6d9d51e
+diego29_uLQ, whGx51eykJ, f0b3db79cdc935c474809f862591bb6c3060566e
+robert29_uLQ, 9O5ZrpwlY0, e3e7820ae4c9f8d80ba80e9755a5ae16471a5a96
+mary29_uLQ, vVOCWjsU19, 27796e835846c3c56b3d927c87642e60d56f5efe
+patricia29_uLQ, HZLWr1e2R3, bf67d18425f0f2eae3e0cc05226fc5b2a8d0a5aa
+daniela29_uLQ, n62NszpG82, 4d1a199c628ef04df343fafad04c0d827acb01b8
+
+Random
+Each line below contains username and hashed password.
+james29-uLQ, d1b74ff3431f37849cf1d9b98c4e58ff077bf8e7
+linda29-uLQ, ce667909822f72ed54328503cdcf14f35f8b967e
+sofia29-uLQ, 1bd4d81dde739ddc2ab12ccad5c9cabf2f59be3e
+santiago29-uLQ, 578faaccb940bd3465a385e1b65b23f52e0810b2
+isabella29-uLQ, f95bef47be815c7cb5818710f135c1d3cc58221e
+diego29-uLQ, a3ef5d5998e7e69a00f3ea4c1cfc4b600731998f
+robert29-uLQ, 252ade31aa3640ab09c6a4a1f435d55f11d84eb8
+mary29-uLQ, b09d49b3c099111ebcb8edea90a67a223ba49314
+patricia29-uLQ, b1e016f033ee0540378e8d18451b5b816880668f
+daniela29-uLQ, d003faedc4d8f221985ecdb9b46356f23d91fb1f
+
+This is the account to break with online attack.
+jonathan29_-uLQ
